@@ -1,0 +1,418 @@
+options:
+  parameters:
+    author: RF Mobile Controller
+    catch_exceptions: 'True'
+    category: '[GRC Hier Blocks]'
+    cmake_opt: ''
+    comment: ''
+    copyright: ''
+    description: Signal detector with ZMQ output for backend integration
+    gen_cmake: 'On'
+    gen_linking: dynamic
+    generate_options: qt_gui
+    hier_block_src_path: '.:'
+    id: hackrf_signal_detector
+    max_nouts: '0'
+    output_language: python
+    placement: (0,0)
+    qt_qss_theme: ''
+    realtime_scheduling: ''
+    run: 'True'
+    run_command: '{python} -u {filename}'
+    run_options: prompt
+    sizing_mode: fixed
+    thread_safe_setters: ''
+    title: HackRF Signal Detector
+    window_size: (1280,800)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [8, 8]
+    rotation: 0
+    state: enabled
+
+blocks:
+- name: samp_rate
+  id: variable
+  parameters:
+    comment: ''
+    value: '2000000'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [8, 100]
+    rotation: 0
+    state: enabled
+
+- name: fft_size
+  id: variable
+  parameters:
+    comment: ''
+    value: '1024'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [8, 180]
+    rotation: 0
+    state: enabled
+
+- name: center_freq
+  id: variable_qtgui_range
+  parameters:
+    comment: ''
+    gui_hint: 0,0,1,2
+    label: Center Freq (MHz)
+    min_len: '200'
+    orient: QtCore.Qt.Horizontal
+    rangeType: float
+    start: '300'
+    step: '0.01'
+    stop: '928'
+    value: '315.07'
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [160, 100]
+    rotation: 0
+    state: enabled
+
+- name: lna_gain
+  id: variable_qtgui_range
+  parameters:
+    comment: ''
+    gui_hint: 0,2,1,1
+    label: LNA Gain
+    min_len: '100'
+    orient: QtCore.Qt.Horizontal
+    rangeType: int
+    start: '0'
+    step: '8'
+    stop: '40'
+    value: '32'
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [360, 100]
+    rotation: 0
+    state: enabled
+
+- name: vga_gain
+  id: variable_qtgui_range
+  parameters:
+    comment: ''
+    gui_hint: 0,3,1,1
+    label: VGA Gain
+    min_len: '100'
+    orient: QtCore.Qt.Horizontal
+    rangeType: int
+    start: '0'
+    step: '2'
+    stop: '62'
+    value: '40'
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [520, 100]
+    rotation: 0
+    state: enabled
+
+- name: min_snr
+  id: variable_qtgui_range
+  parameters:
+    comment: ''
+    gui_hint: 0,4,1,1
+    label: Min SNR (dB)
+    min_len: '100'
+    orient: QtCore.Qt.Horizontal
+    rangeType: float
+    start: '5'
+    step: '1'
+    stop: '30'
+    value: '10'
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [680, 100]
+    rotation: 0
+    state: enabled
+
+- name: freq_hz
+  id: variable
+  parameters:
+    comment: ''
+    value: int(center_freq * 1e6)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [120, 180]
+    rotation: 0
+    state: enabled
+
+- name: osmosdr_source_0
+  id: osmosdr_source
+  parameters:
+    affinity: ''
+    alias: ''
+    ant0: ''
+    args: '"hackrf=0"'
+    bb_gain0: '20'
+    bw0: '0'
+    comment: ''
+    corr0: '0'
+    dc_offset_mode0: '0'
+    freq0: freq_hz
+    gain0: lna_gain
+    gain_mode0: 'False'
+    if_gain0: vga_gain
+    iq_balance_mode0: '0'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    nchan: '1'
+    num_mboards: '1'
+    sample_rate: samp_rate
+    sync: sync
+    type: fc32
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [40, 300]
+    rotation: 0
+    state: enabled
+
+- name: qtgui_freq_sink_x_0
+  id: qtgui_freq_sink_x
+  parameters:
+    affinity: ''
+    alias: ''
+    alpha1: '1.0'
+    autoscale: 'False'
+    average: '0.1'
+    axislabels: 'True'
+    bw: samp_rate
+    color1: '"blue"'
+    comment: ''
+    ctrlpanel: 'False'
+    fc: freq_hz
+    fftsize: fft_size
+    freqhalf: 'True'
+    grid: 'True'
+    gui_hint: 1,0,1,5
+    label: Relative Gain
+    legend: 'True'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    name: '"Spectrum"'
+    nconnections: '1'
+    norm_window: 'False'
+    showports: 'False'
+    tr_chan: '0'
+    tr_level: '0.0'
+    tr_mode: qtgui.TRIG_MODE_FREE
+    tr_tag: '""'
+    type: complex
+    units: dB
+    update_time: '0.10'
+    width1: '1'
+    wintype: window.WIN_BLACKMAN_hARRIS
+    ymax: '0'
+    ymin: '-100'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [320, 260]
+    rotation: 0
+    state: enabled
+
+- name: qtgui_waterfall_sink_x_0
+  id: qtgui_waterfall_sink_x
+  parameters:
+    affinity: ''
+    alias: ''
+    alpha1: '1.0'
+    axislabels: 'True'
+    bw: samp_rate
+    color1: '0'
+    comment: ''
+    fc: freq_hz
+    fftsize: fft_size
+    freqhalf: 'True'
+    grid: 'False'
+    gui_hint: 2,0,1,5
+    int_max: '0'
+    int_min: '-100'
+    legend: 'True'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    name: '"Waterfall"'
+    nconnections: '1'
+    showports: 'False'
+    type: complex
+    update_time: '0.10'
+    wintype: window.WIN_BLACKMAN_hARRIS
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [320, 420]
+    rotation: 0
+    state: enabled
+
+- name: logpwrfft_x_0
+  id: logpwrfft_x
+  parameters:
+    affinity: ''
+    alias: ''
+    average: 'True'
+    avg_alpha: '0.3'
+    comment: ''
+    fft_size: fft_size
+    frame_rate: '15'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    ref_scale: '2'
+    sample_rate: samp_rate
+    shift: 'True'
+    type: complex
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [320, 560]
+    rotation: 0
+    state: enabled
+
+- name: epy_block_peak_detector
+  id: epy_block
+  parameters:
+    _source_code: |
+      """Peak Detector - detects signals and publishes via ZMQ"""
+      import numpy as np
+      from gnuradio import gr
+      import zmq
+      import json
+      import time
+
+
+      class blk(gr.sync_block):
+          """Detects peaks in FFT data and publishes via ZMQ"""
+
+          def __init__(self, fft_size=1024, samp_rate=2000000.0, center_freq=315070000.0,
+                       min_snr_db=10.0, zmq_port=5555):
+              gr.sync_block.__init__(
+                  self,
+                  name='Peak Detector',
+                  in_sig=[(np.float32, fft_size)],
+                  out_sig=None
+              )
+              self._fft_size = fft_size
+              self._samp_rate = samp_rate
+              self.center_freq = center_freq
+              self._min_snr_db = min_snr_db
+              self._ctx = zmq.Context()
+              self._pub = self._ctx.socket(zmq.PUB)
+              try:
+                  self._pub.bind("tcp://127.0.0.1:{}".format(int(zmq_port)))
+              except zmq.error.ZMQError:
+                  self._pub = None
+              self._last = 0
+
+          def work(self, input_items, output_items):
+              now = time.time()
+              if now - self._last < 0.2:
+                  return len(input_items[0])
+              
+              for fft_db in input_items[0]:
+                  noise = float(np.median(fft_db))
+                  thresh = noise + self._min_snr_db
+                  above = fft_db > thresh
+                  
+                  if not np.any(above):
+                      continue
+                  
+                  peaks = []
+                  in_pk = False
+                  start = 0
+                  
+                  for i in range(len(fft_db)):
+                      if above[i] and not in_pk:
+                          in_pk = True
+                          start = i
+                      elif not above[i] and in_pk:
+                          in_pk = False
+                          region = fft_db[start:i]
+                          mx = start + int(np.argmax(region))
+                          fo = (mx - self._fft_size / 2.0) * (self._samp_rate / self._fft_size)
+                          pf = self.center_freq + fo
+                          peaks.append({
+                              "freq_hz": round(float(pf), 1),
+                              "freq_mhz": round(float(pf / 1e6), 4),
+                              "power_db": round(float(fft_db[mx]), 1),
+                              "noise_db": round(noise, 1),
+                              "snr_db": round(float(fft_db[mx]) - noise, 1),
+                              "timestamp": now,
+                          })
+                  
+                  if in_pk:
+                      region = fft_db[start:]
+                      mx = start + int(np.argmax(region))
+                      fo = (mx - self._fft_size / 2.0) * (self._samp_rate / self._fft_size)
+                      pf = self.center_freq + fo
+                      peaks.append({
+                          "freq_hz": round(float(pf), 1),
+                          "freq_mhz": round(float(pf / 1e6), 4),
+                          "power_db": round(float(fft_db[mx]), 1),
+                          "noise_db": round(noise, 1),
+                          "snr_db": round(float(fft_db[mx]) - noise, 1),
+                          "timestamp": now,
+                      })
+                  
+                  if peaks:
+                      peaks.sort(key=lambda p: p["power_db"], reverse=True)
+                      if self._pub:
+                          for p in peaks[:3]:
+                              self._pub.send_string(json.dumps(p))
+                      self._last = now
+              
+              return len(input_items[0])
+    affinity: ''
+    alias: ''
+    center_freq: freq_hz
+    comment: ''
+    fft_size: fft_size
+    maxoutbuf: '0'
+    min_snr_db: min_snr
+    minoutbuf: '0'
+    samp_rate: samp_rate
+    zmq_port: '5555'
+  states:
+    _io_cache: ('Peak Detector', 'blk', [('fft_size', '1024'), ('samp_rate', '2000000.0'), ('center_freq', '315070000.0'), ('min_snr_db', '10.0'), ('zmq_port', '5555')], [('0', 'float', 1024)], [], 'Detects peaks in FFT data and publishes via ZMQ', ['center_freq', 'min_snr_db'])
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [560, 560]
+    rotation: 0
+    state: enabled
+
+connections:
+- [osmosdr_source_0, '0', qtgui_freq_sink_x_0, '0']
+- [osmosdr_source_0, '0', qtgui_waterfall_sink_x_0, '0']
+- [osmosdr_source_0, '0', logpwrfft_x_0, '0']
+- [logpwrfft_x_0, '0', epy_block_peak_detector, '0']
+
+metadata:
+  file_format: 1
+  grc_version: 3.10.12.0

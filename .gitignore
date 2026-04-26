@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+
+# Editor/OS
+.DS_Store
+*.swp
+*.swo
+*~
+
+# Runtime/output data (do not upload captures/sessions)
+backend/captures/
+backend/sessions/
+captures/
+sessions/
+
+# Local docs/artifacts not needed for repo upload
+presentation/
+PRESENTATION_OUTLINE.md
+SESSION_NOTES.md
+
+# Large third-party firmware mirror (keep repo focused)
+h-rat-firmware/
