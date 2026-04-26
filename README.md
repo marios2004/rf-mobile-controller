@@ -36,26 +36,24 @@ Mobile-controlled RF pentesting toolkit. Control HackRF One and Evil Crow RF2 fr
 - Real-time peak detection with SNR
 - Identify active signals
 
-### 2. Simple Replay (Evil Crow)
-- Configure frequency and modulation
-- Record incoming signals via WebSocket
-- One-tap replay
+### 2. Replay (Current: HackRF backend in UI)
+- Configure replay frequency from mobile UI
+- Record IQ capture during button press
+- Save one named `.iq` file and replay trimmed burst clips
 
 ### 3. Rollback Attack (HackRF)
 - Passive capture of N consecutive signals
 - Session management with metadata
 - Sequential replay for rolling code bypass
 
-### 4. Auto-Capture + Decode
-- Monitor frequency for signal bursts
-- Auto-detect OOK vs 2-FSK modulation
-- Demodulate and extract pulse timings
-- Save as `.rawdata` (h-RAT) and `.sub` (Flipper) files
+### 4. Jammer Control
+- Continuous jamming control from mobile UI
+- Frequency-selectable jammer operation
 
-### 5. Evil Crow Direct Control
-- Set frequency, modulation, preset
-- Start/stop recording
-- Quick link to h-RAT web UI
+### 5. Advanced/Diagnostic Modules (Backend)
+- Auto-capture + decode tools (`signal_processor.py`, GRC flows)
+- Evil Crow direct control logic remains in backend modules
+- Used for diagnostics/research beyond the main final UI tabs
 
 ## Hardware Requirements
 
@@ -134,10 +132,9 @@ Expected output:
 | Tab | Function |
 |-----|----------|
 | **Scan** | Frequency sweep with HackRF |
-| **Replay** | Simple capture/replay with Evil Crow |
+| **Replay** | Capture/save/replay workflow (HackRF backend) |
 | **Rollback** | Multi-signal passive rollback attack |
-| **Auto** | Auto-capture + demodulation |
-| **ECRF** | Direct Evil Crow control |
+| **Jam** | Jammer control |
 
 ## File Structure
 
