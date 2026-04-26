@@ -2,61 +2,6 @@
 
 Mobile-controlled RF pentesting toolkit. Control HackRF One and Evil Crow RF2 from your phone via an ESP8266-hosted web interface.
 
-## Final Report Guide (10-15 pages)
-
-Use this structure directly for the final project report.
-
-### 1) Introduction to Topic (3-4 paragraphs)
-- Introduce RF key fobs and sub-GHz access systems (cars, gates, garages).
-- Explain why replay and rollback testing matters in real-world security.
-- Motivate the project: practical, low-cost hardware security assessment.
-- Define the scope: authorized pentesting and education only.
-
-### 2) Project Objectives (1 paragraph)
-- Build a mobile-controlled RF pentesting toolkit that can:
-  - scan active RF frequencies,
-  - capture/replay signals,
-  - test rollback-style workflows,
-  - demonstrate end-to-end hardware/software integration.
-
-### 3) Project Review / State of the Art (1-2 pages)
-- Brief review of SDR-based pentesting tools and methods.
-- Compare common replay approaches:
-  - raw IQ replay (HackRF),
-  - timing replay (`.rawdata` / `.sub`, Evil Crow/Flipper style).
-- Discuss fixed-code vs rolling-code systems and known limitations.
-- Include legal/ethical boundaries and responsible testing practice.
-
-### 4) Methodology (0.5-1 page)
-- System design method:
-  - ESP8266 web UI,
-  - Python serial backend,
-  - HackRF scanning/capture/replay,
-  - Evil Crow HTTP/WebSocket control.
-- Test method:
-  - identify target frequency,
-  - capture during button press,
-  - replay and observe behavior,
-  - iterate gains/timing/format.
-
-### 5) Project Description + Evaluation (3-5 pages)
-- Describe architecture and each component role.
-- Explain each tab/workflow and command path.
-- Show experiments performed, logs/screenshots, and outcomes.
-- Evaluate reliability:
-  - successful cases,
-  - failed cases and root causes,
-  - fixes applied (capture timing, backend routing, replay clipping).
-- Provide your own critique on design trade-offs and performance.
-
-### 6) Conclusions + Future Work (0.5 page)
-- Summarize what was achieved and what was not fully solved.
-- Propose practical next steps:
-  - automatic capture quality scoring,
-  - backend switch between HackRF/Evil Crow modes,
-  - improved replay burst extraction,
-  - stronger UI feedback and test automation.
-
 ## Architecture
 
 ```
